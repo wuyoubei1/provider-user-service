@@ -8,7 +8,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @EnableEurekaClient
 @SpringBootApplication
-@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 public class UserServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(UserServiceApplication.class, args);

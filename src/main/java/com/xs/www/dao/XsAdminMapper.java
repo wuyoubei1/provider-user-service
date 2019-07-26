@@ -9,17 +9,17 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface XsAdminMapper {
-    long countByExample(XsAdminExample example);
+	public long countByExample(XsAdminExample example);
 
-    int deleteByExample(XsAdminExample example);
+	public  int deleteByExample(XsAdminExample example);
 
-    int insert(XsAdmin record);
+	public int insert(XsAdmin record);
 
-    int insertSelective(XsAdmin record);
+	public int insertSelective(XsAdmin record);
 
-    List<XsAdmin> selectByExample(XsAdminExample example);
+    public List<XsAdmin> selectByExample(XsAdminExample example);
 
-    int updateByExampleSelective(@Param("record") XsAdmin record, @Param("example") XsAdminExample example);
+    public int updateByExampleSelective(@Param("record") XsAdmin record, @Param("example") XsAdminExample example);
 
-    int updateByExample(@Param("record") XsAdmin record, @Param("example") XsAdminExample example);
+    public int updateByExample(@Param("record") XsAdmin record, @Param("example") XsAdminExample example);
 }

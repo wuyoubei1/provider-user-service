@@ -17,6 +17,7 @@ public class XsAdminService implements IXsAdminService{
 	
 	public List<XsAdmin> getList(){
 		XsAdminExample example = new XsAdminExample();
+		xsAdminMapper.countByExample(example);
 		List<XsAdmin> list=xsAdminMapper.selectByExample(example);
 		return list;
 	}

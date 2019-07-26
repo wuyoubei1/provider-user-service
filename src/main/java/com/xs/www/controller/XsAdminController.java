@@ -32,4 +32,11 @@ public class XsAdminController {
 		}
 		return answers;
 	}
+	
+	@GetMapping(value="actuator/info")
+	public String actuatorInfo(){
+		List<XsAdmin> list=xsAdminService.getList();
+		System.out.println("========="+list);
+		return "ok";
+	}
 }

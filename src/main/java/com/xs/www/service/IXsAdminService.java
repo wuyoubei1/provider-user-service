@@ -3,6 +3,7 @@ package com.xs.www.service;
 import java.util.List;
 
 import com.xs.www.bean.XsAdmin;
+import com.xs.www.common.Wrapper;
 
 public interface IXsAdminService {
 
@@ -11,4 +12,13 @@ public interface IXsAdminService {
 	 * @return
 	 */
 	public List<XsAdmin> getList();
+	
+	/**
+	 * 登陆
+	 * @param name
+	 * @param password
+	 * @param systemId 系统ID
+	 * @return
+	 */
+	public Wrapper<XsAdmin,XsAdmin> login(String name,String password,short systemId);
 }

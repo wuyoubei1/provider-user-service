@@ -2,18 +2,16 @@ package com.xs.www.bean;
 
 import java.util.Date;
 
-/**
- * 系统管理员
- * @author wuyb
- */
 public class XsAdmin {
     private Long id;
 
     private String name;
 
-    private Byte age;
+    private String loginName;
 
-    private Short postId;
+    private String password;
+
+    private Byte age;
 
     private Short roleId;
 
@@ -22,6 +20,10 @@ public class XsAdmin {
     private Date createTime;
 
     private Short createUserId;
+
+    private Date modifyTime;
+
+    private Byte isDeleted;
 
     public Long getId() {
         return id;
@@ -39,20 +41,28 @@ public class XsAdmin {
         this.name = name;
     }
 
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Byte getAge() {
         return age;
     }
 
     public void setAge(Byte age) {
         this.age = age;
-    }
-
-    public Short getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Short postId) {
-        this.postId = postId;
     }
 
     public Short getRoleId() {
@@ -85,5 +95,21 @@ public class XsAdmin {
 
     public void setCreateUserId(Short createUserId) {
         this.createUserId = createUserId;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
+    public Byte getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Byte isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

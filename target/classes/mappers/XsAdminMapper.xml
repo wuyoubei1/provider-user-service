@@ -2,14 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xs.www.dao.XsAdminMapper">
   <resultMap id="BaseResultMap" type="com.xs.www.bean.XsAdmin">
-    <result column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="age" jdbcType="TINYINT" property="age" />
-    <result column="post_id" jdbcType="SMALLINT" property="postId" />
     <result column="role_id" jdbcType="SMALLINT" property="roleId" />
     <result column="system_id" jdbcType="SMALLINT" property="systemId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="create_user_id" jdbcType="SMALLINT" property="createUserId" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, age, post_id, role_id, system_id, create_time, create_user_id
+    id, name, login_name, password, age, role_id, system_id, create_time, create_user_id, 
+    modify_time, is_deleted
   </sql>
   <select id="selectByExample" parameterType="com.xs.www.bean.XsAdminExample" resultMap="BaseResultMap">
     select
@@ -87,6 +91,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xs_admin
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from xs_admin
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
   <delete id="deleteByExample" parameterType="com.xs.www.bean.XsAdminExample">
     delete from xs_admin
     <if test="_parameter != null">
@@ -94,12 +108,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xs.www.bean.XsAdmin">
-    insert into xs_admin (id, name, age, 
-      post_id, role_id, system_id, 
-      create_time, create_user_id)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=TINYINT}, 
-      #{postId,jdbcType=SMALLINT}, #{roleId,jdbcType=SMALLINT}, #{systemId,jdbcType=SMALLINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=SMALLINT})
+    insert into xs_admin (id, name, login_name, 
+      password, age, role_id, 
+      system_id, create_time, create_user_id, 
+      modify_time, is_deleted)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{age,jdbcType=TINYINT}, #{roleId,jdbcType=SMALLINT}, 
+      #{systemId,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=SMALLINT}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.xs.www.bean.XsAdmin">
     insert into xs_admin
@@ -110,11 +126,14 @@
       <if test="name != null">
         name,
       </if>
+      <if test="loginName != null">
+        login_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
       <if test="age != null">
         age,
-      </if>
-      <if test="postId != null">
-        post_id,
       </if>
       <if test="roleId != null">
         role_id,
@@ -128,6 +147,12 @@
       <if test="createUserId != null">
         create_user_id,
       </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -136,11 +161,14 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="loginName != null">
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
       <if test="age != null">
         #{age,jdbcType=TINYINT},
-      </if>
-      <if test="postId != null">
-        #{postId,jdbcType=SMALLINT},
       </if>
       <if test="roleId != null">
         #{roleId,jdbcType=SMALLINT},
@@ -153,6 +181,12 @@
       </if>
       <if test="createUserId != null">
         #{createUserId,jdbcType=SMALLINT},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -171,11 +205,14 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.loginName != null">
+        login_name = #{record.loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
       <if test="record.age != null">
         age = #{record.age,jdbcType=TINYINT},
-      </if>
-      <if test="record.postId != null">
-        post_id = #{record.postId,jdbcType=SMALLINT},
       </if>
       <if test="record.roleId != null">
         role_id = #{record.roleId,jdbcType=SMALLINT},
@@ -189,6 +226,12 @@
       <if test="record.createUserId != null">
         create_user_id = #{record.createUserId,jdbcType=SMALLINT},
       </if>
+      <if test="record.modifyTime != null">
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -198,16 +241,67 @@
     update xs_admin
     set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
+      login_name = #{record.loginName,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
       age = #{record.age,jdbcType=TINYINT},
-      post_id = #{record.postId,jdbcType=SMALLINT},
       role_id = #{record.roleId,jdbcType=SMALLINT},
       system_id = #{record.systemId,jdbcType=SMALLINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      create_user_id = #{record.createUserId,jdbcType=SMALLINT}
+      create_user_id = #{record.createUserId,jdbcType=SMALLINT},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xs.www.bean.XsAdmin">
+    update xs_admin
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null">
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=TINYINT},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=SMALLINT},
+      </if>
+      <if test="systemId != null">
+        system_id = #{systemId,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=SMALLINT},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xs.www.bean.XsAdmin">
+    update xs_admin
+    set name = #{name,jdbcType=VARCHAR},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      age = #{age,jdbcType=TINYINT},
+      role_id = #{roleId,jdbcType=SMALLINT},
+      system_id = #{systemId,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=SMALLINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>
-
-

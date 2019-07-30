@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.xs.www.bean.XsAdmin;
 import com.xs.www.bean.XsAdminExample;
 import com.xs.www.bean.XsAdminExample.Criteria;
@@ -20,8 +23,10 @@ public class XsAdminService implements IXsAdminService{
 	
 	public List<XsAdmin> getList(){
 		XsAdminExample example = new XsAdminExample();
-		xsAdminMapper.countByExample(example);
+		Page<XsAdmin> page = PageHelper.startPage(1, 1, true);
 		List<XsAdmin> list=xsAdminMapper.selectByExample(example);
+		long total=page.getTotal();
+		System.out.println(total);
 		return list;
 	}
 	

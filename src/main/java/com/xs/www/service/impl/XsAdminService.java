@@ -21,13 +21,11 @@ public class XsAdminService implements IXsAdminService{
 	@Autowired
 	private XsAdminMapper xsAdminMapper;
 	
-	public List<XsAdmin> getList(){
+	public Page<XsAdmin> getList(int pageNo,int pageSize){
 		XsAdminExample example = new XsAdminExample();
-		Page<XsAdmin> page = PageHelper.startPage(1, 1, true);
+		Page<XsAdmin> page = PageHelper.startPage(pageNo, pageSize, true);
 		List<XsAdmin> list=xsAdminMapper.selectByExample(example);
-		long total=page.getTotal();
-		System.out.println(total);
-		return list;
+		return page;
 	}
 	
 	public Wrapper<XsAdmin,XsAdmin> login(String name,String password,short systemId){

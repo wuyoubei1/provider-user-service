@@ -2,6 +2,7 @@ package com.xs.www.service;
 
 import java.util.List;
 
+import com.github.pagehelper.Page;
 import com.xs.www.bean.XsAdmin;
 import com.xs.www.common.Wrapper;
 
@@ -11,7 +12,7 @@ public interface IXsAdminService {
 	 * 获取管理员列表
 	 * @return
 	 */
-	public List<XsAdmin> getList();
+	public Page<XsAdmin> getList(int pageNo,int pageSize);
 	
 	/**
 	 * 登陆

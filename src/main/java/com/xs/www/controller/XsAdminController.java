@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
 import com.xs.www.bean.XsAdmin;
 import com.xs.www.common.Wrapper;
 import com.xs.www.service.IXsAdminService;
@@ -23,21 +24,22 @@ public class XsAdminController {
 	private IXsAdminService xsAdminService;
 
 	@PostMapping(value="/getAdminList")
-	public List<XsAdmin> getAdminList() {
-		List<XsAdmin> list=xsAdminService.getList();
-		return list;
+	public Page<XsAdmin> getAdminList(int pageNo,int pageSize) {
+		Page<XsAdmin> page=xsAdminService.getList(pageNo,pageSize);
+		return page;
 	}
 	
 	@GetMapping(value="/list")
-	public List<XsAdmin> list() {
-		List<XsAdmin> list=xsAdminService.getList();
-		return list;
+	public Page<XsAdmin> list(int pageNo,@RequestBody int pageSize) {
+		Page<XsAdmin> page=xsAdminService.getList(pageNo,pageSize);
+		page.setTotal(page.getTotal());
+		return page;
 	}
 	
 	@GetMapping(value="actuator/info")
 	public String actuatorInfo(){
-		List<XsAdmin> list=xsAdminService.getList();
-		System.out.println("========="+list);
+		Page<XsAdmin> page=xsAdminService.getList(1,1);
+		System.out.println("========="+page.getResult().get(0));
 		return "ok";
 	}
 	
